@@ -1,0 +1,3 @@
+= Hello World RPM Documentation
+
+Welcome to the Hello World RPM documentation index.
