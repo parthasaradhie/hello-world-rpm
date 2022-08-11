@@ -1,5 +1,5 @@
 Name:       cpaas-test-brew-rpm
-Version:    1
+Version:    4.18.0
 Release:    1
 Summary:    Most simple RPM package
 License:    FIXME
