@@ -1,4 +1,4 @@
-Name:       hello-world
+Name:       cpaas-test-brew-rpm
 Version:    1
 Release:    1
 Summary:    Most simple RPM package
