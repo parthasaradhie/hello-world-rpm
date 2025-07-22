@@ -59,10 +59,6 @@ jobs:
     permissions:
       contents: write
     runs-on: ubuntu-latest
-    env:
-      NEW_TAG: ${{ needs.get_info.outputs.version }}
-      ROLLING_TAG: "snapshot"
-      
     steps:
 
       - name: Checkout
@@ -75,6 +71,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -ex
+          NEW_TAG="${{ needs.get_info.outputs.version }}"
+          ROLLING_TAG="snapshot"
 
           gh release delete "$ROLLING_TAG" --yes || :
 
@@ -89,15 +87,15 @@ jobs:
         uses: softprops/action-gh-release@c95fe1489396fe8a9eb87c0abf8aa5b2ef267fda # v2
         with:
           make_latest: false
-          name: ${NEW_TAG}
-          tag_name: ${NEW_TAG}
+          name: ${{ needs.get_info.outputs.version }}
+          tag_name: ${{ needs.get_info.outputs.version }}
           generate_release_notes: false
       
       - name: Rolling release
         uses: softprops/action-gh-release@c95fe1489396fe8a9eb87c0abf8aa5b2ef267fda # v2
         with:
-          make_latest: false
+          make_latest: true
           name: Rolling release
-          body: Stable rolling release, currently the same as `${NEW_TAG}`.
+          body: Stable rolling release, currently the same as `${{ needs.get_info.outputs.version }}`.
           tag_name: "snapshot"
           generate_release_notes: false
