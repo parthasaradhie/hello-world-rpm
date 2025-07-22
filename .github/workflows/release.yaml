@@ -70,7 +70,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          set -e
+          set -ex
           NEW_TAG="${{ needs.get_info.outputs.version }}"
           ROLLING_TAG="snapshot"
 
@@ -79,8 +79,8 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"          
 
-          git tag -a -f "$NEW_TAG"
-          git tag -a -f "$ROLLING_TAG"
+          git tag -a -f -m "Version tag added automatically" "$NEW_TAG"
+          git tag -a -f -m 'Rolling version tag added automatically' "$ROLLING_TAG"
           git push --tags -f
         
       - name: Versioned release
