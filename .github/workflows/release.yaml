@@ -52,7 +52,8 @@ jobs:
         with:
           tag_prefix: "v"
           change_path: "log/"
-          debug_output: true
+          debug: true
+          branch: "main"
 
   create_release:
 
