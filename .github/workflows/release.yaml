@@ -51,7 +51,7 @@ jobs:
         uses: paulhatch/semantic-version@v5.4.0
         with:
           tag_prefix: "v"
-          change_path: "log/*"
+          change_path: "log/"
 
   create_release:
 
