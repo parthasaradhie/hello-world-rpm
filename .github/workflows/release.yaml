@@ -52,6 +52,7 @@ jobs:
         with:
           tag_prefix: "v"
           change_path: "log/"
+          debug_output: true
 
   create_release:
 
