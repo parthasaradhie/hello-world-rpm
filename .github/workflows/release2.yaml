@@ -1,0 +1,71 @@
+name: Create Versioned Release
+
+on:
+  workflow_dispatch:
+
+# obtain latest version (from tag or release)
+# LATEST_TAG=$( git tag -l --merged main "v*" | sort -n | tail -1 )
+# check for changes since latest tag
+# increment version 
+# tag and push
+# create release
+
+
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine Next Version and Check for Changes
+        id: version_check
+        run: |
+          git fetch --tags
+          LATEST_TAG=$(gh release list --limit 1 --json tagName --jq '.[0].tagName' || echo "")
+          if [[ -z "$LATEST_TAG" ]]; then
+            echo "No previous release found. Starting with version v0.1.0."
+            NEXT_VERSION="v0.1.0"
+            HAS_CHANGES="true"
+          else
+            echo "Latest release tag is $LATEST_TAG. Checking for changes in 'policy/' directory."
+            if git diff --quiet $LATEST_TAG HEAD -- policy/; then
+              echo "No changes found in 'policy/' directory since tag $LATEST_TAG. No new release will be created."
+              HAS_CHANGES="false"
+            else
+              echo "Changes found in 'policy/' directory since tag $LATEST_TAG."
+              HAS_CHANGES="true"
+            fi
+            NEXT_VERSION=$(echo "$LATEST_TAG" | awk -F. -v OFS=. '{$NF++;print}')
+            echo "Calculated next version: $NEXT_VERSION"
+          fi
+          echo "has_changes=$HAS_CHANGES" >> $GITHUB_OUTPUT
+          echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
+          echo "latest_tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub Release
+        if: steps.version_check.outputs.has_changes == 'true'
+        run: |
+          NEXT_VERSION="${{ steps.version_check.outputs.next_version }}"
+          LATEST_TAG="${{ steps.version_check.outputs.latest_tag }}"
+          if [[ -n "$LATEST_TAG" ]]; then
+            echo "Generating release notes from commits since $LATEST_TAG."
+            git log $LATEST_TAG..HEAD --pretty=format:"* %s (%h)" > release_notes.md
+          else
+            echo "This is the initial release." > release_notes.md
+          fi
+          echo "Creating release $NEXT_VERSION..."
+          gh release create "$NEXT_VERSION" \
+            --title "Release $NEXT_VERSION" \
+            --notes-file release_notes.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
