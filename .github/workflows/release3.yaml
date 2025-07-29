@@ -40,11 +40,11 @@ jobs:
       latest_tag_sha: ${{ steps.get_info.outputs.latest_tag_sha }}
       changed: ${{ steps.get_info.outputs.changed }}
       next_version: ${{ steps.get_info.outputs.next_version }}
-  
+    
     env:
         # TRACKED_PATHS: "acceptance/ policy/"
         TRACKED_PATHS: "log/ VERSION"
-
+  
     steps:
 
       - name: Checkout code
@@ -57,6 +57,7 @@ jobs:
         run: |
           set -e
           git fetch --tags
+          export TRACKED_PATHS
           source hack/derive-version.sh
           
           echo latest_tag=$LATEST_TAG | tee -a "$GITHUB_OUTPUT"
@@ -85,7 +86,7 @@ jobs:
           git fetch --tags
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"          
-
+          
           source hack/add-auto-tag.sh
           git push --tags
         
