@@ -20,57 +20,26 @@ set -o nounset
 set -o pipefail
 
 # Assumptions:
-# 1. The file VERSION exists and contains the major.minor version number
-# 2. The most recent commit that changed that file is the commit that
-#    bumped the minor version number.
-# 3. The only way that a change arrives in main branch is via a merge
-#    commit, i.e. no direct pushes to main.
-# 4. Git checkouts are done with fetch-depth=0 so we have enough history
-#    to see when the VERSION file changed.
+# 1. A tag exists and contains the major.minor.patch version number
+# 2. Git checkouts are done with fetch-depth=0 so we have enough history
+# 3. Tags are fetched
 
-# The VERSION file in the top level directory
-VERSION_FILE=$(git rev-parse --show-toplevel)/VERSION
+# Set this variable to limit the paths that will checked
+# for changes since last version
+TRACKED_PATHS=${TRACKED_PATHS}
 
-# Read its contents
-MAJOR_MINOR=$(cat ${VERSION_FILE})
+# Obtain most recent version tag
+LATEST_TAG=$(git describe --tags --abbrev=0 --match="v[0-9]*" main)
+LATEST_TAG_SHA=$(git rev-parse "$LATEST_TAG")
 
-# Most recent sha where $VERSION_FILE was modified.
-# Using a tag for this would be reasonable, but I'm trying to
-# avoid having non-useful (from a user's point of view) tags
-# cluttering up our tag list.
-VERSION_BUMP_SHA=$(git log -n1 --format=%H -- ${VERSION_FILE})
+# check for changes since last version
+HAVE_CHANGED=false
+DIFF=$(git diff --name-only $LATEST_TAG_SHA $TRACKED_PATHS)
+[ -z "$DIFF" ] || HAVE_CHANGED=true
 
-# How many merge commits happened since the most recent minor version bump
-MERGES_SINCE_VERSION_BUMP=$(git rev-list --merges --count ${VERSION_BUMP_SHA}..HEAD)
+# bump patch version
+CURRENT_VERSION_SANITIZED=$(echo "$LATEST_TAG" | grep -Eo '[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}')
+NEXT_VERSION=$(echo "$CURRENT_VERSION_SANITIZED" | awk -F. -v OFS=. '{$NF++;print}')
+NEXT_VERSION=v$NEXT_VERSION
 
-# Count the parent shas of the current commit.
-# Used to detect if we're at a merge commit.
-PARENT_SHA_COUNT=$(git log -n1 --format=%P | wc -w)
-
-# Subtract 1 because we want the first build in main branch after the
-# version bump to be X.Y.0
-PATCH_NUM=$((${MERGES_SINCE_VERSION_BUMP} - 1))
-
-# Handle edge case where $VERSION_FILE was modified in the current PR
-[ $PATCH_NUM -lt 0 ] && PATCH_NUM=0
-
-if [ ${PARENT_SHA_COUNT} -lt 2 ]; then
-  # Must be a local build or a CI build in an unmerged PR.
-  # Use something like v0.3.0-ci-eecf77f9
-  SHORT_SHA=$(git rev-parse --short=8 HEAD)
-  FULL_VERSION="v${MAJOR_MINOR}.${PATCH_NUM}-ci-${SHORT_SHA}"
-else
-  # Must be building on a merge commit
-  # Use a short and tidy version, e.g. v0.3.0
-  FULL_VERSION="v${MAJOR_MINOR}.${PATCH_NUM}"
-fi
-
-# Generally blank but will be set to "redhat" for Konflux builds
-BUILD_SUFFIX="${1:-""}"
-
-# This is build metadata in semver terms, see https://semver.org/#spec-item-10
-if [ -n "${BUILD_SUFFIX}" ]; then
-  FULL_VERSION="${FULL_VERSION}+${BUILD_SUFFIX}"
-fi
-
-echo ${FULL_VERSION}
+echo ${NEXT_VERSION}

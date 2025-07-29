@@ -15,7 +15,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 ---
-name: Release
+name: Release3
 
 on:
   workflow_dispatch:
@@ -36,10 +36,10 @@ jobs:
 
     runs-on: ubuntu-latest
     outputs:
-      latest_tag: ${{ steps.get_latest_tag.outputs.latest_tag }}
-      latest_tag_sha: ${{ steps.get_latest_tag.outputs.latest_tag_sha }}
-      changed: ${{ steps.has_changed.outputs.changed }}
-      next_version: ${{ steps.bump.outputs.next_version }}
+      latest_tag: ${{ steps.get_info.outputs.latest_tag }}
+      latest_tag_sha: ${{ steps.get_info.outputs.latest_tag_sha }}
+      changed: ${{ steps.get_info.outputs.changed }}
+      next_version: ${{ steps.get_info.outputs.next_version }}
   
     env:
         TRACKED_PATHS: "acceptance/ policy/"
@@ -51,34 +51,18 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Obtain latest tag
-        id: get_latest_tag
+      - name: Get info
+        id: get_info
         run: |
-          set -ex
+          set -e
           git fetch --tags
-          tag=$(git describe --tags --abbrev=0 --match="v[0-9]*" main)
-          echo latest_tag=$tag | tee -a "$GITHUB_OUTPUT"
-          echo latest_tag_sha=$(git rev-parse "$tag") | tee -a "$GITHUB_OUTPUT"
+          source hack/derive-version.sh
+          
+          echo latest_tag=$LATEST_TAG | tee -a "$GITHUB_OUTPUT"
+          echo latest_tag_sha=$LATEST_TAG_SHA | tee -a "$GITHUB_OUTPUT"
+          echo changed=$HAVE_CHANGED" | tee -a "$GITHUB_OUTPUT"
+          echo next_version=$NEXT_VERSION" | tee -a "$GITHUB_OUTPUT"
 
-      - name: Check if tracked files/dirs have changed
-        id: has_changed
-        run: |
-          set -ex
-          latest_tag_sha=${{ steps.get_latest_tag.outputs.latest_tag_sha }}
-          changed=false
-          diff=$(git diff --name-only $latest_tag_sha $TRACKED_PATHS)
-          [ -z "$diff" ] || changed=true
-          echo "changed=$changed" | tee -a "$GITHUB_OUTPUT"
-
-      - name: Get next version
-        id: bump
-        run: |
-          set -ex
-          latest_tag=${{ steps.get_latest_tag.outputs.latest_tag }}
-          next_version=$(echo "$latest_tag" | awk -F. -v OFS=. '{$NF++;print}')
-          echo "next_version=$next_version" | tee -a "$GITHUB_OUTPUT"
-        
-  
   create_release:
 
     needs: get_info
@@ -94,15 +78,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Add tag
+      - name: Tag
         run: |
           set -ex
-          NEW_TAG="${{ needs.get_info.outputs.next_version }}"
-
+          git fetch --tags
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"          
 
-          git tag -a -f -m "New version added automatically" "$NEW_TAG"
+          source hack/add-auto-tag.sh
           git push --tags
         
       - name: Create a release
