@@ -42,7 +42,8 @@ jobs:
       next_version: ${{ steps.get_info.outputs.next_version }}
   
     env:
-        TRACKED_PATHS: "acceptance/ policy/"
+        # TRACKED_PATHS: "acceptance/ policy/"
+        TRACKED_PATHS: "log/ VERSION"
 
     steps:
 
