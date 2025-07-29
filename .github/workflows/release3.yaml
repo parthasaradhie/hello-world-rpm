@@ -95,4 +95,4 @@ jobs:
           name: ${{ needs.get_info.outputs.next_version }}
           tag_name: ${{ needs.get_info.outputs.next_version }}
           generate_release_notes: false
-          files: ${{TRACKED_PATHS}}
+          files: ${TRACKED_PATHS}
