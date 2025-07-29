@@ -24,9 +24,9 @@ set -o pipefail
 # 2. Git checkouts are done with fetch-depth=0 so we have enough history
 # 3. Tags are fetched
 
-# Set this variable to limit the paths that will checked
-# for changes since last version
-TRACKED_PATHS=${TRACKED_PATHS}
+# Pass in paths that will be checked for changes since last version.
+# Leave blank for "all".
+TRACKED_PATHS=$*
 
 # Obtain most recent version tag
 LATEST_TAG=$(git describe --tags --abbrev=0 --match="v[0-9]*" main)
