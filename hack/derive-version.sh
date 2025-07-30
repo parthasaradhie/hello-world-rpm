@@ -32,7 +32,7 @@ TRACKED_PATHS=$*
 
 # Obtain most recent version tag
 LATEST_TAG=$(git describe --tags --abbrev=0 --match="v[0-9]*" main)
-LATEST_TAG_SHA=$(git rev-parse "$LATEST_TAG")
+LATEST_TAG_SHA=$(git rev-parse --verify "$LATEST_TAG"^{commit})
 
 # check for changes since last version
 HAVE_CHANGED=false
