@@ -96,4 +96,3 @@ jobs:
           tag_name: ${{ needs.get_info.outputs.next_version }}
           make_latest: false
           generate_release_notes: false
-          files: ${{env.TRACKED_PATHS}}
