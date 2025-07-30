@@ -20,16 +20,16 @@ set -o nounset
 set -o pipefail
 
 # Assumptions:
-# 1. A tag exists and contains the major.minor.patch version number
+# 1. A tag exists on branch "main" and contains the major.minor.patch version number
 # 2. Git checkouts are done with fetch-depth=0 so we have enough history
 # 3. Tags are fetched
 
 # Pass in paths that will be checked for changes since last version.
 # Leave blank for "all".
-TRACKED_PATHS=$*
+TRACKED_PATHS=$@
 
 # Obtain most recent version tag
-LATEST_TAG=$(git describe --tags --abbrev=0 --match="v[0-9]*" main)
+LATEST_TAG=$(git describe --tags --abbrev=0 --match="v*.*.*" main)
 LATEST_TAG_SHA=$(git rev-parse --verify "$LATEST_TAG"^{commit})
 
 # check for changes since last version
