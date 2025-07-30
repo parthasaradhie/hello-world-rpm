@@ -61,8 +61,8 @@ jobs:
           
           echo latest_tag=$LATEST_TAG | tee -a "$GITHUB_OUTPUT"
           echo latest_tag_sha=$LATEST_TAG_SHA | tee -a "$GITHUB_OUTPUT"
-          echo changed=$HAVE_CHANGED" | tee -a "$GITHUB_OUTPUT"
-          echo next_version=$NEXT_VERSION" | tee -a "$GITHUB_OUTPUT"
+          echo changed=$HAVE_CHANGED | tee -a "$GITHUB_OUTPUT"
+          echo next_version=$NEXT_VERSION | tee -a "$GITHUB_OUTPUT"
 
   create_release:
 
