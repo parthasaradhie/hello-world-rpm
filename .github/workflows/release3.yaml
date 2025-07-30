@@ -55,7 +55,7 @@ jobs:
       - name: Get info
         id: get_info
         run: |
-          set -e
+          set -ex # TODO: remove -x
           git fetch --tags
           source hack/derive-version.sh $TRACKED_PATHS
           
@@ -96,4 +96,4 @@ jobs:
           tag_name: ${{ needs.get_info.outputs.next_version }}
           make_latest: false
           generate_release_notes: false
-          files: ${TRACKED_PATHS}
+          files: ${{env.TRACKED_PATHS}}
