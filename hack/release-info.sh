@@ -35,3 +35,4 @@ DIFF=$(git diff --name-only $LATEST_TAG_SHA $TRACKED_FILES_DIRS)
 
 # bump patch version
 NEXT_VERSION=$(echo "$LATEST_TAG" | awk -F. -v OFS=. '{$NF++;print}')
+# the last line
