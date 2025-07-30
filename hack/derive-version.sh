@@ -19,8 +19,6 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-set -e # TODO: remove that line
-
 # Assumptions:
 # 1. A tag exists and contains the major.minor.patch version number
 # 2. Git checkouts are done with fetch-depth=0 so we have enough history
