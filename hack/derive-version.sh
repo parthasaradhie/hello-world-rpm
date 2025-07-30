@@ -36,7 +36,7 @@ LATEST_TAG_SHA=$(git rev-parse --verify "$LATEST_TAG"^{commit})
 
 # check for changes since last version
 HAVE_CHANGED=false
-DIFF=$(git diff --name-only $LATEST_TAG_SHA $TRACKED_PATHS)
+DIFF=$(git diff --name-only $LATEST_TAG_SHA -- $TRACKED_PATHS)
 [ -z "$DIFF" ] || HAVE_CHANGED=true
 
 # bump patch version

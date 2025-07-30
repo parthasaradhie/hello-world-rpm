@@ -55,7 +55,7 @@ jobs:
       - name: Get info
         id: get_info
         run: |
-          set -ex # TODO: remove -x
+          set -e
           git fetch --tags
           source hack/derive-version.sh $TRACKED_PATHS
           
