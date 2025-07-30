@@ -67,7 +67,7 @@ jobs:
   create_release:
 
     needs: get_info
-    if: needs.get_info.outputs.changed
+    if: needs.get_info.outputs.changed == 'true'
     permissions:
       contents: write
     runs-on: ubuntu-latest
