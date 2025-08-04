@@ -65,5 +65,11 @@ jobs:
             and make a release note for github release.
             - output it as markdown
             - categorize with section and emoji
-            put that in a file named "release-notes.txt"
+            put that in a file named "release-notes.txt" and also
+            print to stdout.
             I will use it for the release
+
+      - name: Use release notes
+        run: |
+          cat release-notes.txt
+
