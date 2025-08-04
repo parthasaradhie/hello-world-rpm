@@ -1,0 +1,69 @@
+name: Gemini CLI
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gemini-cli:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
+        with:
+          egress-policy: audit
+          disable-telemetry: true
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch tags
+        id: fetch_tags
+        run: |
+          git fetch --tags
+
+      - name: Run Gemini
+        uses: google-gemini/gemini-cli-action@main
+        with:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          version: latest
+          settings_json: |
+            {
+              "sandbox": true,
+              "autoAccept": true
+            }
+          #     "coreTools": [
+          #       "run_shell_command(echo)",
+          #       "run_shell_command(gh pr view)",
+          #       "run_shell_command(gh pr diff)",
+          #       "run_shell_command(gh pr comment)",
+          #       "run_shell_command(cat)",
+          #       "run_shell_command(head)",
+          #       "run_shell_command(tail)",
+          #       "run_shell_command(grep)",
+          #       "run_shell_command(git config)",
+          #       "run_shell_command(git status)",
+          #       "run_shell_command(git add)",
+          #       "run_shell_command(git commit)",
+          #       "run_shell_command(git push)",
+          #       "run_shell_command(git diff)",
+          #       "write_file"
+          #     ],
+          #     "telemetry": {
+          #       "enabled": true,
+          #       "target": "gcp"
+          #     },
+          #     "sandbox": false
+          #   }
+          prompt: |
+            List all the changes between the tags v1.0.0 v1.1.303 
+            and make a release note for github release.
+            - output it as markdown
+            - categorize with section and emoji
+            put that in a file named "release-notes.txt"
+            I will use it for the release
