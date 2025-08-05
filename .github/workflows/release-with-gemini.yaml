@@ -132,7 +132,7 @@ jobs:
 
 
   create-release:
-    needs: add_tag
+    needs: [add_tag, generate-release-notes]
     if: needs.add_tag.outputs.changed == 'true'
     runs-on: ubuntu-latest
     permissions:
