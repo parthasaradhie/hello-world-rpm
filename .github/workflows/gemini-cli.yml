@@ -61,13 +61,190 @@ jobs:
           #     "sandbox": false
           #   }
           prompt: |
-            List all the changes between the tags v1.0.0 v1.1.303 
-            and make a release note for github release.
-            - output it as markdown
-            - categorize with section and emoji
-            put that in a file named "release-notes.txt" and also
-            print to stdout.
-            I will use it for the release
+            Here is a list of all the changes between the commits 42eb855e1ab6e8d95fb7d7801ac9cbf9f60301cd and
+            ef638d5f8adde74b2ca8eb94031c06dc0e1570af:
+
+            commit ef638d5f8adde74b2ca8eb94031c06dc0e1570af
+            Author: ghartuv <ghartuv@redhat.com>
+            Date:   Mon Jul 21 18:14:04 2025 +0300
+
+                Add automated release creation workflow
+
+                This commit introduces a new github workflow to automate the process of
+                creating releases.
+                The workflow provides the following features:
+
+                - Runs on a schedule or can be invoked manually
+                - Only runs if changes are found since the last release.
+                - Automatically increments the patch version number
+
+                Ref: https://issues.redhat.com/browse/EC-1164
+
+            commit 02e1eb7c64e310b32074a3d5ee471b9d7dc12baf
+            Merge: c2ee699 330aaa5
+            Author: Simon Baird <sbaird@redhat.com>
+            Date:   Wed Jul 23 11:39:37 2025 -0400
+
+                Merge pull request #1453 from conforma/dependabot/go_modules/acceptance/golang.org/x/oauth2-0.27.0
+
+                Bump golang.org/x/oauth2 from 0.25.0 to 0.27.0 in /acceptance
+
+            commit c2ee6995bb579a01d05d29277b8cc4bfe4a3a8a8
+            Merge: 80f511f a8058a7
+            Author: Simon Baird <sbaird@redhat.com>
+            Date:   Wed Jul 23 11:39:29 2025 -0400
+
+                Merge pull request #1454 from conforma/dependabot/go_modules/golang.org/x/oauth2-0.27.0
+
+                Bump golang.org/x/oauth2 from 0.25.0 to 0.27.0
+
+            commit a8058a78fe46e59dcc23832c830532b799598d4f
+            Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+            Date:   Tue Jul 22 20:10:11 2025 +0000
+
+                Bump golang.org/x/oauth2 from 0.25.0 to 0.27.0
+
+                Bumps [golang.org/x/oauth2](https://github.com/golang/oauth2) from 0.25.0 to 0.27.0.
+                - [Commits](https://github.com/golang/oauth2/compare/v0.25.0...v0.27.0)
+
+                ---
+                updated-dependencies:
+                - dependency-name: golang.org/x/oauth2
+                  dependency-version: 0.27.0
+                  dependency-type: indirect
+                ...
+
+                Signed-off-by: dependabot[bot] <support@github.com>
+
+            commit 330aaa5dbab14d142ffff35b1cfc7e0a56e7990b
+            Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+            Date:   Tue Jul 22 20:09:48 2025 +0000
+
+                Bump golang.org/x/oauth2 from 0.25.0 to 0.27.0 in /acceptance
+
+                Bumps [golang.org/x/oauth2](https://github.com/golang/oauth2) from 0.25.0 to 0.27.0.
+                - [Commits](https://github.com/golang/oauth2/compare/v0.25.0...v0.27.0)
+
+                ---
+                updated-dependencies:
+                - dependency-name: golang.org/x/oauth2
+                  dependency-version: 0.27.0
+                  dependency-type: indirect
+                ...
+
+                Signed-off-by: dependabot[bot] <support@github.com>
+
+            commit 80f511fca8f110ba5eb5308242218a47f358f573
+            Merge: 3285c92 f8daa73
+            Author: Simon Baird <sbaird@redhat.com>
+            Date:   Tue Jul 22 16:08:25 2025 -0400
+
+                Merge pull request #1451 from conforma/dependabot/github_actions/step-security/harden-runner-2.13.0
+
+                Bump step-security/harden-runner from 2.12.2 to 2.13.0
+
+            commit 3285c927bc4b5f80fa68e0b540a5cda849011c80
+            Merge: ed6078c 68c0fad
+            Author: Simon Baird <sbaird@redhat.com>
+            Date:   Tue Jul 22 16:08:17 2025 -0400
+
+                Merge pull request #1452 from conforma/dependabot/github_actions/github/codeql-action-3.29.3
+
+                Bump github/codeql-action from 3.29.2 to 3.29.3
+
+            commit 68c0fadb148a84ee84e16c26f84d0c5da15aad08
+            Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+            Date:   Mon Jul 21 18:33:28 2025 +0000
+
+                Bump github/codeql-action from 3.29.2 to 3.29.3
+
+                ---
+                updated-dependencies:
+                - dependency-name: github/codeql-action
+                  dependency-version: 3.29.3
+                  dependency-type: direct:production
+                  update-type: version-update:semver-patch
+                ...
+
+                Signed-off-by: dependabot[bot] <support@github.com>
+
+            commit f8daa739a4843755380822bfde3fbdd059b3e531
+            Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+            Date:   Mon Jul 21 18:26:51 2025 +0000
+
+                Bump step-security/harden-runner from 2.12.2 to 2.13.0
+
+                ---
+                updated-dependencies:
+                - dependency-name: step-security/harden-runner
+                  dependency-version: 2.13.0
+                  dependency-type: direct:production
+                  update-type: version-update:semver-minor
+                ...
+
+                Signed-off-by: dependabot[bot] <support@github.com>
+
+            commit ed6078c27771999748d77f1aa5e3a3415df44147
+            Merge: a20dcd4 f09c8a9
+            Author: Simon Baird <sbaird@redhat.com>
+            Date:   Fri Jul 18 16:30:04 2025 -0400
+
+                Merge pull request #1450 from Allda/ISV-5866
+
+                Use purl to determine base image registry
+
+            commit f09c8a9bce0da583ea8e1f35d322b3954d7dd1c2
+            Author: Ales Raszka <araszka@redhat.com>
+            Date:   Wed Jul 16 12:40:12 2025 +0200
+
+                Use purl to determine base image registry
+
+                A SBOM generator fixed some minor issues with the SBOM document that
+                affects a base images. This was not compatible with conforma rule. The
+                new implementation of the rule now depends on the based image purl and
+                gets the image from there. The spdx type was correctly handled. The
+                cyclonedx type was fixed in this commit.
+
+                JIRA: ISV-5866
+
+                Signed-off-by: Ales Raszka <araszka@redhat.com>
+
+            commit a20dcd49c7b36ddec254717bba46001b728e2271
+            Merge: 42eb855 f7f1fc3
+            Author: Stefano Pentassuglia <spentass@redhat.com>
+            Date:   Thu Jul 17 09:43:27 2025 +0200
+
+                Merge pull request #1449 from st3penta/outdated-tasks-msg-extension
+
+                Extend 'outdated task' message to non-ta pipelines
+
+            commit f7f1fc327fe120e0713eea19ccb6c8b174d6ef5d
+            Author: Stefano Pentassuglia <spentass@redhat.com>
+            Date:   Thu Jul 10 17:14:22 2025 +0200
+
+                Extend 'outdated task' message to non-ta pipelines
+
+                The violation description for the rule 'trusted_task.trusted' informs
+                the user when the violation can be resolved by updating the task digest
+                to a newer version.
+
+                Anyway, this helper description was only implemented for PipelineRuns
+                that use Trusted Artifacts.
+
+                This commit extends it also to PipelineRuns that don't use Trusted
+                Artifacts.
+
+                Ref: https://github.com/conforma/policy/pull/1394
+                Ref: https://issues.redhat.com/browse/EC-1269
+
+            end of changelog.
+            based on the above changes, make a release notes for github release.
+            categorize with sections, each section name should have a meaningful emoji
+            each note
+            Add jira links for each change if they are specified in the commit message.
+
+            output it in markdown format
+            save it in a file named "release-notes.txt"
 
       - name: Use release notes
         run: |
