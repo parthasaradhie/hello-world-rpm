@@ -83,7 +83,7 @@ jobs:
           git push -f --tags
         
 
-  generate-release-notes:
+  generate_release_notes:
     # keep readonly permissions for extra safety
     needs: add_tag
     if: needs.add_tag.outputs.changed == 'true'
@@ -132,8 +132,8 @@ jobs:
 
 
   create-release:
-    needs: [add_tag, generate-release-notes]
-    if: needs.add_tag.outputs.changed == 'true'
+    needs: [add_tag, generate_release_notes]
+    if: ${{ needs.add_tag.outputs.changed == 'true' && needs.generate_release_notes.result == 'success'}}
     runs-on: ubuntu-latest
     permissions:
       contents: write
