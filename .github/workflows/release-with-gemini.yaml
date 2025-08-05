@@ -108,15 +108,12 @@ jobs:
             }
           prompt: |
             My release changes are listed in the file named CHANGELOG.txt.
-            Make release notes for github release.
-            Categorize it nicely with emojis
-            output as Markdown
-            add a one liner of the change.
-            Add a jira link for each change if specified in the commit message.
-            Put the jira link at the begining of the line.
-            Include all changes that have a jira link.
+            Make a list of all notable changes and categorize it nicely with emojis,
+            output as Markdown and a one liner of the change. Add a jira link for
+            each change if specified in the commit message. put the link in the
+            begining of the line.
             Preface the release notes with a brief summary of the release.
-            Don't create a title for the release notes.
+            Don't create a title for the release.
             Also save the release notes in a file named "release-notes.md".
 
       - name: Upload artifact
