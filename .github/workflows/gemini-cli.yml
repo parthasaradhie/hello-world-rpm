@@ -27,7 +27,7 @@ jobs:
         run: |
           git fetch --tags
 
-      - name: Run Gemini
+      - name: Generate release notes
         uses: google-gemini/gemini-cli-action@main
         with:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -50,3 +50,11 @@ jobs:
         run: |
           cat release-notes.md
 
+      - name: Create a release
+        uses: softprops/action-gh-release@72f2c25fcb47643c292f7107632f7a47c1df5cd8 # v2.3.2
+        with:
+          name: "v1.1.303"
+          tag_name: "v1.1.303"
+          body_path: "release-notes.md"
+          make_latest: false
+          generate_release_notes: false
