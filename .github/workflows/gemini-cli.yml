@@ -45,10 +45,35 @@ jobs:
             preface the release notes with a brief summary of the release.
             also save the release notes in a file named "release-notes.md".
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-notes
+          path: release-notes.md
 
-      - name: Use release notes
-        run: |
-          cat release-notes.md
+
+  create-release:
+    needs: gemini-cli
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
+        with:
+          egress-policy: audit
+          disable-telemetry: true
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: release-notes
 
       - name: Create a release
         uses: softprops/action-gh-release@72f2c25fcb47643c292f7107632f7a47c1df5cd8 # v2.3.2
