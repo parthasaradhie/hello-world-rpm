@@ -37,48 +37,14 @@ jobs:
               "sandbox": true,
               "autoAccept": true
             }
-          #     "coreTools": [
-          #       "run_shell_command(echo)",
-          #       "run_shell_command(gh pr view)",
-          #       "run_shell_command(gh pr diff)",
-          #       "run_shell_command(gh pr comment)",
-          #       "run_shell_command(cat)",
-          #       "run_shell_command(head)",
-          #       "run_shell_command(tail)",
-          #       "run_shell_command(grep)",
-          #       "run_shell_command(git config)",
-          #       "run_shell_command(git status)",
-          #       "run_shell_command(git add)",
-          #       "run_shell_command(git commit)",
-          #       "run_shell_command(git push)",
-          #       "run_shell_command(git diff)",
-          #       "write_file"
-          #     ],
-          #     "telemetry": {
-          #       "enabled": true,
-          #       "target": "gcp"
-          #     },
-          #     "sandbox": false
-          #   }
           prompt: |
-            Here is a list of all the changes between the commits 42eb855e1ab6e8d95fb7d7801ac9cbf9f60301cd and
-            ef638d5f8adde74b2ca8eb94031c06dc0e1570af:
+            The output of my releases changes is listed below.
+            make a list of all notable changes and categorize it nicely with emojis, output
+            as Markdown and a one liner of the change. Add a jira link for each change if specified in the commit message. put the link in the begining of the line.
+            preface the release notes with a brief summary of the release.
+            also save the release notes in a file named "RELEASE_NOTES.md".
 
-            commit ef638d5f8adde74b2ca8eb94031c06dc0e1570af
-            Author: ghartuv <ghartuv@redhat.com>
-            Date:   Mon Jul 21 18:14:04 2025 +0300
-
-                Add automated release creation workflow
-
-                This commit introduces a new github workflow to automate the process of
-                creating releases.
-                The workflow provides the following features:
-
-                - Runs on a schedule or can be invoked manually
-                - Only runs if changes are found since the last release.
-                - Automatically increments the patch version number
-
-                Ref: https://issues.redhat.com/browse/EC-1164
+            My changelog for the release:
 
             commit 02e1eb7c64e310b32074a3d5ee471b9d7dc12baf
             Merge: c2ee699 330aaa5
@@ -86,7 +52,7 @@ jobs:
             Date:   Wed Jul 23 11:39:37 2025 -0400
 
                 Merge pull request #1453 from conforma/dependabot/go_modules/acceptance/golang.org/x/oauth2-0.27.0
-
+                
                 Bump golang.org/x/oauth2 from 0.25.0 to 0.27.0 in /acceptance
 
             commit c2ee6995bb579a01d05d29277b8cc4bfe4a3a8a8
@@ -95,7 +61,7 @@ jobs:
             Date:   Wed Jul 23 11:39:29 2025 -0400
 
                 Merge pull request #1454 from conforma/dependabot/go_modules/golang.org/x/oauth2-0.27.0
-
+                
                 Bump golang.org/x/oauth2 from 0.25.0 to 0.27.0
 
             commit a8058a78fe46e59dcc23832c830532b799598d4f
@@ -103,17 +69,17 @@ jobs:
             Date:   Tue Jul 22 20:10:11 2025 +0000
 
                 Bump golang.org/x/oauth2 from 0.25.0 to 0.27.0
-
+                
                 Bumps [golang.org/x/oauth2](https://github.com/golang/oauth2) from 0.25.0 to 0.27.0.
                 - [Commits](https://github.com/golang/oauth2/compare/v0.25.0...v0.27.0)
-
+                
                 ---
                 updated-dependencies:
                 - dependency-name: golang.org/x/oauth2
                   dependency-version: 0.27.0
                   dependency-type: indirect
                 ...
-
+                
                 Signed-off-by: dependabot[bot] <support@github.com>
 
             commit 330aaa5dbab14d142ffff35b1cfc7e0a56e7990b
@@ -121,17 +87,17 @@ jobs:
             Date:   Tue Jul 22 20:09:48 2025 +0000
 
                 Bump golang.org/x/oauth2 from 0.25.0 to 0.27.0 in /acceptance
-
+                
                 Bumps [golang.org/x/oauth2](https://github.com/golang/oauth2) from 0.25.0 to 0.27.0.
                 - [Commits](https://github.com/golang/oauth2/compare/v0.25.0...v0.27.0)
-
+                
                 ---
                 updated-dependencies:
                 - dependency-name: golang.org/x/oauth2
                   dependency-version: 0.27.0
                   dependency-type: indirect
                 ...
-
+                
                 Signed-off-by: dependabot[bot] <support@github.com>
 
             commit 80f511fca8f110ba5eb5308242218a47f358f573
@@ -140,7 +106,7 @@ jobs:
             Date:   Tue Jul 22 16:08:25 2025 -0400
 
                 Merge pull request #1451 from conforma/dependabot/github_actions/step-security/harden-runner-2.13.0
-
+                
                 Bump step-security/harden-runner from 2.12.2 to 2.13.0
 
             commit 3285c927bc4b5f80fa68e0b540a5cda849011c80
@@ -149,7 +115,7 @@ jobs:
             Date:   Tue Jul 22 16:08:17 2025 -0400
 
                 Merge pull request #1452 from conforma/dependabot/github_actions/github/codeql-action-3.29.3
-
+                
                 Bump github/codeql-action from 3.29.2 to 3.29.3
 
             commit 68c0fadb148a84ee84e16c26f84d0c5da15aad08
@@ -157,7 +123,7 @@ jobs:
             Date:   Mon Jul 21 18:33:28 2025 +0000
 
                 Bump github/codeql-action from 3.29.2 to 3.29.3
-
+                
                 ---
                 updated-dependencies:
                 - dependency-name: github/codeql-action
@@ -165,7 +131,7 @@ jobs:
                   dependency-type: direct:production
                   update-type: version-update:semver-patch
                 ...
-
+                
                 Signed-off-by: dependabot[bot] <support@github.com>
 
             commit f8daa739a4843755380822bfde3fbdd059b3e531
@@ -173,7 +139,7 @@ jobs:
             Date:   Mon Jul 21 18:26:51 2025 +0000
 
                 Bump step-security/harden-runner from 2.12.2 to 2.13.0
-
+                
                 ---
                 updated-dependencies:
                 - dependency-name: step-security/harden-runner
@@ -181,7 +147,7 @@ jobs:
                   dependency-type: direct:production
                   update-type: version-update:semver-minor
                 ...
-
+                
                 Signed-off-by: dependabot[bot] <support@github.com>
 
             commit ed6078c27771999748d77f1aa5e3a3415df44147
@@ -190,7 +156,7 @@ jobs:
             Date:   Fri Jul 18 16:30:04 2025 -0400
 
                 Merge pull request #1450 from Allda/ISV-5866
-
+                
                 Use purl to determine base image registry
 
             commit f09c8a9bce0da583ea8e1f35d322b3954d7dd1c2
@@ -198,15 +164,15 @@ jobs:
             Date:   Wed Jul 16 12:40:12 2025 +0200
 
                 Use purl to determine base image registry
-
+                
                 A SBOM generator fixed some minor issues with the SBOM document that
                 affects a base images. This was not compatible with conforma rule. The
                 new implementation of the rule now depends on the based image purl and
                 gets the image from there. The spdx type was correctly handled. The
                 cyclonedx type was fixed in this commit.
-
+                
                 JIRA: ISV-5866
-
+                
                 Signed-off-by: Ales Raszka <araszka@redhat.com>
 
             commit a20dcd49c7b36ddec254717bba46001b728e2271
@@ -215,38 +181,363 @@ jobs:
             Date:   Thu Jul 17 09:43:27 2025 +0200
 
                 Merge pull request #1449 from st3penta/outdated-tasks-msg-extension
-
+                
                 Extend 'outdated task' message to non-ta pipelines
+
+            commit 42eb855e1ab6e8d95fb7d7801ac9cbf9f60301cd
+            Merge: 5f96b88 d65c587
+            Author: Simon Baird <sbaird@redhat.com>
+            Date:   Wed Jul 16 17:49:33 2025 -0400
+
+                Merge pull request #1445 from conforma/dependabot/go_modules/github.com/conforma/cli-0.7.109
+                
+                Bump github.com/conforma/cli from 0.7.101 to 0.7.109
 
             commit f7f1fc327fe120e0713eea19ccb6c8b174d6ef5d
             Author: Stefano Pentassuglia <spentass@redhat.com>
             Date:   Thu Jul 10 17:14:22 2025 +0200
 
                 Extend 'outdated task' message to non-ta pipelines
-
+                
                 The violation description for the rule 'trusted_task.trusted' informs
                 the user when the violation can be resolved by updating the task digest
                 to a newer version.
-
+                
                 Anyway, this helper description was only implemented for PipelineRuns
                 that use Trusted Artifacts.
-
+                
                 This commit extends it also to PipelineRuns that don't use Trusted
                 Artifacts.
-
+                
                 Ref: https://github.com/conforma/policy/pull/1394
                 Ref: https://issues.redhat.com/browse/EC-1269
 
-            end of changelog.
-            based on the above changes, make a release notes for github release.
-            categorize with sections, each section name should have a meaningful emoji
-            each note
-            Add jira links for each change if they are specified in the commit message.
+            commit 5f96b88719131982d2510df05e0877f80351f55f
+            Merge: 2894342 43dc745
+            Author: Guy Hartuv <63234468+Acepresso@users.noreply.github.com>
+            Date:   Thu Jul 10 11:36:39 2025 +0300
 
-            output it in markdown format
-            save it in a file named "release-notes.txt"
+                Merge pull request #1442 from Acepresso/remove-attestation_task_bundle-EC-998
+                
+                Remove attestation_task_bundle package
+
+            commit 28943423ba93cab051e7a25f025b8fb65734bdbc
+            Merge: 59e7d59 66d7482
+            Author: Dheeraj <djodha@redhat.com>
+            Date:   Tue Jul 8 18:31:41 2025 +0530
+
+                Merge pull request #1440 from dheerajodha/EC-1097
+                
+                EC-1097: Separate Missing Task detection from Trust validation
+
+            commit 43dc745c22ba4198a1e6d60ce1ff318e6d1fb3a5
+            Author: ghartuv <ghartuv@redhat.com>
+            Date:   Tue Jul 8 13:55:51 2025 +0300
+
+                Fix: Corrected OPA coverage generation in Makefile
+                
+                The `coverage.json` file was incorrectly generated with "undefined"
+                content when `make test` was run.
+                This is now fixed by updating the `opa eval` command within the Makefile
+                to correctly reference the `data.hack.from_opa` path, aligning with the
+                `package hack` declaration in `hack/simplecov.rego`.
+
+            commit 27533c1aafe5f67c210cd0355c6d659ef5cec1b7
+            Author: ghartuv <ghartuv@redhat.com>
+            Date:   Sun Jul 6 15:14:31 2025 +0300
+
+                Remove attestation_task_bundle package
+                
+                The addition of the trusted_task package effectively deprecated the
+                attestation_task_bundle package.
+                Remove the attestation_task_bundle package altogether.
+                
+                Ref: https://issues.redhat.com/browse/EC-998
+                Ref: https://github.com/conforma/policy/issues/1163
+
+            commit 59e7d59803a9184f9347b93df45006e3daacfe5e
+            Merge: acfaf0c efa7f76
+            Author: Joseph Stuart <jstuart@redhat.com>
+            Date:   Mon Jul 7 18:43:59 2025 -0500
+
+                Merge pull request #1429 from joejstuart/EC-1338
+                
+                Add pipeline_intention field to rule metadata
+
+            commit efa7f767c54d05bb97c1dee348b3ec98cc6f3c5d
+            Author: jstuart <jstuart@redhat.com>
+            Date:   Wed Jun 25 10:52:17 2025 -0500
+
+                Add pipeline_intention field to rule metadata
+                
+                Extend Rego policy rule metadata to include a pipeline_intention field
+                that declares when rules are relevant: "release", "staging", or null (always).
+                
+                Changes:
+                - Add pipeline_intention field to custom metadata section in YAML array format
+                - Update schedule rules (weekday_restriction, date_restriction) with [release, production]
+                - Update quay_expiration rule (expires_label) with [release, production, staging]
+                - Update OLM rules (unpinned_snapshot_references, inaccessible_related_images,
+                  unmapped_references) with [release, production, staging]
+                
+                The field is optional and defaults to null (non-release-bound) for backwards
+                compatibility. Existing helper functions (_release_restrictions_apply,
+                _schedule_restrictions_apply) remain unchanged to maintain current behavior.
+                
+                Pipeline intention values align with existing runtime checks in rule data.
+                
+                https://issues.redhat.com/browse/EC-1338
+
+            commit acfaf0c1647ed81b475fb373f4ac70902bd3783c
+            Merge: 928ee69 655bbf2
+            Author: Simon Baird <sbaird@redhat.com>
+            Date:   Mon Jul 7 16:30:12 2025 -0400
+
+                Merge pull request #1446 from dheerajodha/EC-1356
+                
+                Remove unsubstituted format string `%s` from solution field of hermetic_task.hermetic rule
+
+            commit 655bbf20b9e670237a6531ae68654ead5df67d47
+            Author: Dheeraj <djodha@redhat.com>
+            Date:   Mon Jul 7 23:58:46 2025 +0530
+
+                remove unsubstituted fmt string `%s` from solution
+                
+                * Conforma log rendered the error:
+                  "fatal: not enough arguments to satisfy format string",
+                * I suspect that its because the solution fields of Rego
+                  rules are not substituted with the values from the
+                  "lib.result_helper" function. This substituion works
+                  only with the "failure_msg field.
+                * So, I removed the `%s` field from the solution field.
+                
+                resolves: EC-1356
+
+            commit d65c5870e8dae220705df1e71bd5d644d1e4b7ce
+            Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+            Date:   Mon Jul 7 17:15:10 2025 +0000
+
+                Bump github.com/conforma/cli from 0.7.101 to 0.7.109
+                
+                Bumps [github.com/conforma/cli](https://github.com/conforma/cli) from 0.7.101 to 0.7.109.
+                - [Release notes](https://github.com/conforma/cli/releases)
+                - [Commits](https://github.com/conforma/cli/compare/v0.7.101...v0.7.109)
+                
+                ---
+                updated-dependencies:
+                - dependency-name: github.com/conforma/cli
+                  dependency-version: 0.7.109
+                  dependency-type: direct:production
+                  update-type: version-update:semver-patch
+                ...
+                
+                Signed-off-by: dependabot[bot] <support@github.com>
+
+            commit 928ee695da3aa1fb09cb9d92232290a6f0f9820c
+            Merge: 21ab402 151c89b
+            Author: Simon Baird <sbaird@redhat.com>
+            Date:   Mon Jul 7 12:54:25 2025 -0400
+
+                Merge pull request #1444 from simonbaird/temp-disable-rpm-unique-version
+                
+                Disable the rpm uniqueness check once again
+
+            commit 151c89b7bd665d71bc1ef4671e19934ea656dfac
+            Author: Simon Baird <sbaird@redhat.com>
+            Date:   Mon Jul 7 10:51:24 2025 -0400
+
+                Disable the rpm uniqueness check once again
+                
+                Since this causes bogus violations for some teams, and there's no
+                solid workaround, let's disable it again while we work on a
+                solution, (rather than force all impacted teams to create custom
+                excludes in the ECP policy.yaml).
+                
+                See the Jira for a longer explanation.
+                
+                I chose the date to give enough time to resolve EC-1354.
+                
+                Ref: https://issues.redhat.com/browse/EC-1354
+
+            commit 21ab40252d60a66f4be01560e499f4779bcfb467
+            Merge: b3831db 75e722c
+            Author: Guy Hartuv <63234468+Acepresso@users.noreply.github.com>
+            Date:   Mon Jul 7 15:18:24 2025 +0300
+
+                Merge pull request #1443 from Acepresso/fix-typo-KFLUXSPRT-4010
+                
+                Fix typo in hyperlink on conforma.dev/docs/policy
+
+            commit 75e722c388c635b8753c929300350ac9ccbc0b6d
+            Author: ghartuv <ghartuv@redhat.com>
+            Date:   Mon Jul 7 10:30:47 2025 +0300
+
+                Fix typo in hyperlink on conforma.dev/docs/policy
+                
+                The link of github.com/conforma/policy when clicked, leads to
+                https://github.com/conforma/plicy (broken address).
+                
+                Ref: https://issues.redhat.com/browse/KFLUXSPRT-4010
+
+            commit b3831db2445305424ee04e266e60203cb9701460
+            Merge: e0f4b63 d8f7715
+            Author: Simon Baird <sbaird@redhat.com>
+            Date:   Thu Jul 3 09:18:36 2025 -0400
+
+                Merge pull request #1441 from simonbaird/exclude-test-repo-from-bundles
+                
+                Exclude test rego from bundles
+
+            commit d8f77151271c679ba1f7eab26f9dbb95739b7fe4
+            Author: Simon Baird <sbaird@redhat.com>
+            Date:   Wed Jul 2 13:48:46 2025 -0400
+
+                Exclude test rego from bundles
+                
+                Benefits:
+                * Smaller bundles will be faster to download.
+                * Less work for the evaluator since it won't have to parse
+                  and compile all these files.
+                * Less work for the cli since it won't have to opa inspect
+                  all these test files when looking for `deny` and `warn`
+                  metadata.
+
+            commit 66d7482dc12d3380dc5c1694fadec7b6bf17baf5
+            Author: Dheeraj <djodha@redhat.com>
+            Date:   Wed Jul 2 22:53:15 2025 +0530
+
+                remove trust filter from _missing_tasks function
+                
+                * Remove `tekton.is_trusted_task(task)` filter from `_missing_tasks` function
+                * Now considers ALL tasks (trusted + untrusted) when checking for required tasks
+                
+                **Before**: Required tasks from untrusted sources were reported as "missing"
+                **After**: Required tasks from untrusted sources are NOT reported as "missing"
+                but are caught by the separate `required_untrusted_task_found` deny rule
+                
+                This change creates cleaner separation of concerns:
+                - `required_tasks_found` rule → handles completely absent tasks
+                - `required_untrusted_task_found` rule → handles present but untrusted tasks
+                
+                resolves: EC-1097
+
+            commit 31ff2c2f70747daf8f3b9f5d9ea40eeb3422c553
+            Author: Dheeraj <djodha@redhat.com>
+            Date:   Tue Jul 1 00:13:31 2025 +0530
+
+                convert required_untrusted_task_found from warn to deny rule
+                
+                * Previously, this rule only warned when required
+                  tasks came from untrusted sources, allowing
+                  builds to proceed with potential security risks.
+                * By converting to a deny rule, we now block
+                  builds that have required tasks resolved from
+                  untrusted sources, enforcing our security
+                  posture that all required pipeline tasks must
+                  come from trusted, verified sources.
+                
+                resolves: EC-1097
+
+            commit e0f4b6333eedf3a527ee2336d238f9d84cfd4a4f
+            Merge: 7133e1d ab00a5c
+            Author: robnester-rh <rnester@redhat.com>
+            Date:   Wed Jul 2 13:20:05 2025 -0400
+
+                Merge pull request #1439 from robnester-rh/fix_repository_names_for_enterprise_contract_registry
+                
+                feat(scripts): add ec- prefix to enterprise-contract repository names
+
+            commit ab00a5c754c0314c955a2b5a8d63da0d431f6552
+            Author: robnester-rh <rnester@redhat.com>
+            Date:   Wed Jul 2 13:18:05 2025 -0400
+
+                feat(scripts): add ec- prefix to enterprise-contract repository names
+                
+                This commit adds the `ec-` prefix back to repository names in the
+                `enterprise-contract` quay registery along with removing the `_` to `-`
+                conversion used for the `conforma` registry repository names.
+                
+                Co-authored-by: claude-4-sonnet
+                Ref: EC-1349
+                Signed-off-by: robnester-rh <rnester@redhat.com>
+
+            commit 7133e1dff91ea99a79a01112250b36b1adac1c74
+            Merge: 9585cbb cca69c7
+            Author: robnester-rh <rnester@redhat.com>
+            Date:   Wed Jul 2 12:44:20 2025 -0400
+
+                Merge pull request #1438 from robnester-rh/update_quay_registry_names
+                
+                fix(scripts): update repository names
+
+            commit cca69c743c3d234b82904e46836ab6999840e8f5
+            Author: robnester-rh <rnester@redhat.com>
+            Date:   Wed Jul 2 12:41:03 2025 -0400
+
+                fix(scripts): update repository names
+                
+                This commit removes the `ec-` prefix from quay repository names and
+                ensures that underscores are replaced by dashes in bundle names.
+                
+                Co-authored-by: claude-4-sonnet
+                Ref: EC-1349
+                Signed-off-by: robnester-rh <rnester@redhat.com>
+
+            commit 9585cbbf7be39dc6e0f6c5ab4b6bdee056704f45
+            Merge: cd7c35c 528ddb8
+            Author: robnester-rh <rnester@redhat.com>
+            Date:   Wed Jul 2 12:04:07 2025 -0400
+
+                Merge pull request #1437 from robnester-rh/push_to_multiple_orgs
+                
+                feat(ci): support pushing bundles to multiple organizations
+
+            commit 528ddb8794132313bf5e0e7467239832f0d1f563
+            Author: robnester-rh <rnester@redhat.com>
+            Date:   Wed Jul 2 11:46:35 2025 -0400
+
+                feat(ci): support pushing bundles to multiple organizations
+                
+                Update GitHub workflow and bundle push script to support pushing
+                the same bundles to both enterprise-contract and conforma organizations.
+                This enables a smooth transition between organizations while ensuring
+                identical bundle content across both.
+                
+                Changes:
+                - Modify workflow to pass repository prefixes as script arguments
+                - Update script to accept multiple repository prefixes via arguments
+                - Add support for organization-specific credentials
+                - Change default organization from enterprise-contract to conforma
+                
+                Assisted-by: ChatGPT
+                Ref: EC-1184, EC-1185, EC-1187, EC-1189
+                Signed-off-by: robnester-rh <rnester@redhat.com>
+
+            commit cd7c35c20762e03270870e8faa832193e313380a
+            Merge: 713401d a167d7d
+            Author: Stefano Pentassuglia <spentass@redhat.com>
+            Date:   Wed Jul 2 16:45:50 2025 +0200
+
+                Merge pull request #1436 from st3penta/fix-img-in-sbom-rule
+                
+                Exclude image index from 'pre build image in SBOM'
+
+            commit a167d7d59645e2402093d1cb7d9022afba48bc51
+            Author: Stefano Pentassuglia <spentass@redhat.com>
+            Date:   Wed Jul 2 15:38:52 2025 +0200
+
+                Exclude image index from 'pre build image in SBOM'
+                
+                This commit reduces the scope of the rule
+                'pre_build_script_task_runner_image_in_sbom' by filtering out image
+                indexes from the check.
+                This is because if we ensure that all the references in an image index
+                are in the SBOM, we don't need to check the image index itself.
+    
+                Ref: https://issues.redhat.com/browse/EC-1347
+
 
       - name: Use release notes
         run: |
-          cat release-notes.txt
+          cat RELEASE_NOTES.md
 
