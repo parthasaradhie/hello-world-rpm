@@ -36,7 +36,7 @@ env:
   
 jobs:
 
-  add_tag:
+  get_info:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -72,21 +72,11 @@ jobs:
           echo changed=$HAVE_CHANGED | tee -a "$GITHUB_OUTPUT"
           echo next_version=$NEXT_VERSION | tee -a "$GITHUB_OUTPUT"
 
-      - name: Add tag
-        if: steps.get_info.outputs.changed == 'true'
-        run: |
-          set -e
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"          
-          
-          source hack/add-auto-tag.sh
-          git push -f --tags
-        
 
   generate_release_notes:
     # keep readonly permissions for extra safety
-    needs: add_tag
-    if: needs.add_tag.outputs.changed == 'true'
+    needs: get_info
+    if: needs.get_info.outputs.changed == 'true'
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
@@ -132,8 +122,8 @@ jobs:
 
 
   create-release:
-    needs: [add_tag, generate_release_notes]
-    if: ${{ needs.add_tag.outputs.changed == 'true' && needs.generate_release_notes.result == 'success'}}
+    needs: [get_info, generate_release_notes]
+    if: ${{ needs.get_info.outputs.changed == 'true' && needs.generate_release_notes.result == 'success'}}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -147,6 +137,18 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Add tag
+        run: |
+          set -e
+          git fetch --tags
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"          
+          
+          source hack/add-auto-tag.sh
+          git push -f --tags
 
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -156,8 +158,8 @@ jobs:
       - name: Create a release
         uses: softprops/action-gh-release@72f2c25fcb47643c292f7107632f7a47c1df5cd8 # v2.3.2
         with:
-          name: ${{ needs.add_tag.outputs.next_version }}
-          tag_name: ${{ needs.add_tag.outputs.next_version }}
+          name: ${{ needs.get_info.outputs.next_version }}
+          tag_name: ${{ needs.get_info.outputs.next_version }}
           body_path: "release-notes.md"
           make_latest: false
           generate_release_notes: false
