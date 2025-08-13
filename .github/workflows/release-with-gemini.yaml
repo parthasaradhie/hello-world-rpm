@@ -97,11 +97,11 @@ jobs:
           git fetch --tags
 
       - name: Generate release notes
-        uses: google-gemini/gemini-cli-action@main
+        uses: google-github-actions/run-gemini-cli@main
         with:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
           version: latest
-          settings_json: |
+          settings: |-
             {
               "sandbox": true,
               "autoAccept": true
