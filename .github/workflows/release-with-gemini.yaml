@@ -19,19 +19,12 @@ name: Release with Gemini
 
 on:
   workflow_dispatch:
-  # schedule:
-    # - cron: '0 9 * * 3'
 
-# Allow only one instance of this workflow to run at a time.
-concurrency:
-  group: ${{ github.workflow }}
-  cancel-in-progress: true
 
 permissions:
   contents: read
 
 env:
-  # TRACKED_PATHS: "acceptance/ policy/"
   TRACKED_PATHS: "log/ VERSION"
   
 jobs:
@@ -54,7 +47,7 @@ jobs:
           disable-telemetry: true
 
       - name: Checkout code
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           fetch-depth: 0
 
@@ -87,7 +80,7 @@ jobs:
           disable-telemetry: true
 
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           fetch-depth: 0
 
@@ -106,13 +99,18 @@ jobs:
               "autoAccept": true
             }
           prompt: |
-            My release changes are listed in the file named CHANGELOG.txt.
-            Make a list of all notable changes and categorize it nicely with emojis,
-            output as Markdown and a one liner of the change. Add a jira link for
-            each change if specified in the commit message. put the link in the
-            begining of the line.
-            Preface the release notes with a brief summary of the release.
+            Make a release notes based on all notable changes since the tag
+            ${{needs.get_info.outputs.latest_tag}}.
+            The changelog is listed in the file named CHANGELOG.txt.
+            Categorize it nicely with emojis, output as Markdown.
+            For each change that you mention in the release notes:
+              - Summarize the change in one line
+              - Put jira link in the beginning of the line, if the change has a
+                jira link in the commit message
+            Include all changes that have jira link in the commit message.
             Don't create a title for the release.
+            Preface the release notes with a brief summary of the release.
+            The summary should also refer to changes in policies and policy rules.
             Also save the release notes in a file named "release-notes.md".
 
       - name: Upload artifact
@@ -120,6 +118,7 @@ jobs:
         with:
           name: release-notes
           path: release-notes.md
+          if-no-files-found: error
 
 
   create_release:
@@ -138,7 +137,7 @@ jobs:
           disable-telemetry: true
 
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           fetch-depth: 0
 
