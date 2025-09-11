@@ -67,7 +67,7 @@ jobs:
 
     needs: get_info
     if: needs.get_info.outputs.changed == 'true'
-    timeout-minutes: 15
+    timeout-minutes: 60
     runs-on: ubuntu-latest
     permissions:
       contents: read
