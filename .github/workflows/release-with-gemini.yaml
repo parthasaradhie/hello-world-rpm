@@ -99,15 +99,18 @@ jobs:
               "autoAccept": true
             }
           prompt: |
-            Make a release notes based on all notable changes since the tag
-            ${{needs.get_info.outputs.latest_tag}}.
-            The changelog is listed in the file named CHANGELOG.txt.
-            Categorize it nicely with emojis, output as Markdown.
+            Provide release notes based on the following commit messages since tag ${{needs.get_info.outputs.latest_tag}}:
+
+            ${{ steps.get_commits.outputs.commit_log }}
+
+            The previous changelog is also available in the file named CHANGELOG.txt for context, but you should primarily use the commit list above.
+
+            Categorize the changes nicely with emojis, and output as Markdown.
             For each change that you mention in the release notes:
               - Summarize the change in one line
-              - Put jira link in the beginning of the line, if the change has a
-                jira link in the commit message
-            Include all changes that have jira link in the commit message.
+              - Put the jira link in the beginning of the line, if the change has a
+                jira link in the commit message (from the list above).
+            Include all changes that have a jira link in the commit message.
             Don't create a title for the release.
             Preface the release notes with a brief summary of the release.
             The summary should also refer to changes in policies and policy rules.
