@@ -22,7 +22,7 @@ on:
 
 
 permissions:
-  contents: read
+  contents: 'write'
 
 env:
   TRACKED_PATHS: "log/ VERSION"
@@ -32,6 +32,9 @@ jobs:
   get_info:
 
     runs-on: ubuntu-latest
+    permissions:
+      contents: 'write'
+      id-token: 'write'
     outputs:
       latest_tag: ${{ steps.get_info.outputs.latest_tag }}
       latest_tag_sha: ${{ steps.get_info.outputs.latest_tag_sha }}
@@ -67,10 +70,11 @@ jobs:
 
     needs: get_info
     if: needs.get_info.outputs.changed == 'true'
-    timeout-minutes: 60
+    timeout-minutes: 5
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: 'write'
+      id-token: 'write'
     steps:
 
       - name: Harden Runner
@@ -89,25 +93,56 @@ jobs:
         run: |
           git fetch --tags
 
+      - name: Get commit messages since last tag
+        id: get_commits
+        run: |
+          log_content=$(git log ${{needs.get_info.outputs.latest_tag}}..HEAD --pretty="format:* %s%n%b")
+          echo "commit_log<<EOF" >> $GITHUB_OUTPUT
+          echo "$log_content" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      # --- NEW STEP ADDED ---
+      # This step reads the content of CHANGELOG.txt and saves it
+      # to an output variable named "changelog_data".
+      - name: Read changelog file
+        id: read_changelog
+        run: |
+          # Use 'cat || true' to prevent failure if the file doesn't exist yet
+          changelog_content=$(cat ./CHANGELOG.txt || true)
+          echo "changelog_data<<EOF" >> $GITHUB_OUTPUT
+          echo "$changelog_content" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      # --- MODIFIED STEP ---
       - name: Generate release notes
         uses: google-github-actions/run-gemini-cli@v0.1.12
         with:
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
-          settings: |-
+          gemini_debug: true
+          settings: |
             {
               "sandbox": false,
-              "autoAccept": true
+              "autoAccept": true,
             }
-          prompt: |
-            Make a release notes based on all notable changes since the tag
-            ${{needs.get_info.outputs.latest_tag}}.
-            The changelog is listed in the file named CHANGELOG.txt.
-            Categorize it nicely with emojis, output as Markdown.
+          # The prompt is updated to include both the commit log
+          # and the changelog file content.
+          prompt: |-
+            Provide release notes based on the following commit messages since tag ${{needs.get_info.outputs.latest_tag}}:
+
+            ${{ steps.get_commits.outputs.commit_log }}
+
+            For additional context, here is the content of the previous changelog file (CHANGELOG.txt):
+
+            ${{ steps.read_changelog.outputs.changelog_data }}
+
+            Use both the commit list and the previous changelog content to generate the new release notes.
+
+            Categorize the changes nicely with emojis, and output as Markdown.
             For each change that you mention in the release notes:
               - Summarize the change in one line
-              - Put jira link in the beginning of the line, if the change has a
-                jira link in the commit message
-            Include all changes that have jira link in the commit message.
+              - Put the jira link in the beginning of the line, if the change has a
+                jira link in the commit message (from the list above).
+            Include all changes that have a jira link in the commit message.
             Don't create a title for the release.
             Preface the release notes with a brief summary of the release.
             The summary should also refer to changes in policies and policy rules.
