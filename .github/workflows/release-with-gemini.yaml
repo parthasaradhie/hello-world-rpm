@@ -89,6 +89,18 @@ jobs:
         run: |
           git fetch --tags
 
+      # --- NEW STEP ADDED ---
+      # This step gets the log of all commits since the last tag
+      # and saves it to an output variable named "commit_log".
+      - name: Get commit messages since last tag
+        id: get_commits
+        run: |
+          log_content=$(git log ${{needs.get_info.outputs.latest_tag}}..HEAD --pretty="format:* %s%n%b")
+          echo "commit_log<<EOF" >> $GITHUB_OUTPUT
+          echo "$log_content" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      # --- MODIFIED STEP ---
       - name: Generate release notes
         uses: google-github-actions/run-gemini-cli@v0.1.12
         with:
@@ -98,6 +110,7 @@ jobs:
               "sandbox": true,
               "autoAccept": true
             }
+          # The prompt is updated to include the commit log directly.
           prompt: |
             Provide release notes based on the following commit messages since tag ${{needs.get_info.outputs.latest_tag}}:
 
