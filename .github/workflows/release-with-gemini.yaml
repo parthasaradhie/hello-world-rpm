@@ -89,41 +89,25 @@ jobs:
         run: |
           git fetch --tags
 
-      # --- NEW STEP ADDED ---
-      # This step gets the log of all commits since the last tag
-      # and saves it to an output variable named "commit_log".
-      - name: Get commit messages since last tag
-        id: get_commits
-        run: |
-          log_content=$(git log ${{needs.get_info.outputs.latest_tag}}..HEAD --pretty="format:* %s%n%b")
-          echo "commit_log<<EOF" >> $GITHUB_OUTPUT
-          echo "$log_content" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-      # --- MODIFIED STEP ---
       - name: Generate release notes
         uses: google-github-actions/run-gemini-cli@v0.1.12
         with:
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
           settings: |-
             {
-              "sandbox": true,
+              "sandbox": false,
               "autoAccept": true
             }
-          # The prompt is updated to include the commit log directly.
           prompt: |
-            Provide release notes based on the following commit messages since tag ${{needs.get_info.outputs.latest_tag}}:
-
-            ${{ steps.get_commits.outputs.commit_log }}
-
-            The previous changelog is also available in the file named CHANGELOG.txt for context, but you should primarily use the commit list above.
-
-            Categorize the changes nicely with emojis, and output as Markdown.
+            Make a release notes based on all notable changes since the tag
+            ${{needs.get_info.outputs.latest_tag}}.
+            The changelog is listed in the file named CHANGELOG.txt.
+            Categorize it nicely with emojis, output as Markdown.
             For each change that you mention in the release notes:
               - Summarize the change in one line
-              - Put the jira link in the beginning of the line, if the change has a
-                jira link in the commit message (from the list above).
-            Include all changes that have a jira link in the commit message.
+              - Put jira link in the beginning of the line, if the change has a
+                jira link in the commit message
+            Include all changes that have jira link in the commit message.
             Don't create a title for the release.
             Preface the release notes with a brief summary of the release.
             The summary should also refer to changes in policies and policy rules.
