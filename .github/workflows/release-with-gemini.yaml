@@ -70,7 +70,8 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: 'write' # For Gemini CLI to write release-notes.md file
+      id-token: 'write'
     steps:
 
       - name: Harden Runner
