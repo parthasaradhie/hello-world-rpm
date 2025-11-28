@@ -67,7 +67,7 @@ jobs:
 
     needs: get_info
     if: needs.get_info.outputs.changed == 'true'
-    timeout-minutes: 60
+    timeout-minutes: 10
     runs-on: ubuntu-latest
     permissions:
       contents: 'read' # For Gemini CLI to write release-notes.md file
