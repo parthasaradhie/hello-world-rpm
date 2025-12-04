@@ -71,7 +71,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      BUILD_SANDBOX: true
     permissions:
       contents: 'read' # For Gemini CLI to write release-notes.md file
     steps:
