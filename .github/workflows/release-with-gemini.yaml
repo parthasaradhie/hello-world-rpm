@@ -97,7 +97,6 @@ jobs:
         with:
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
           gemini_cli_version: "ps/freeze"
-          gemini_debug: false
           settings: |-
             {
               "sandbox": true
