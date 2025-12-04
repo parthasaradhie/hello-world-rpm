@@ -98,7 +98,7 @@ jobs:
           gemini_cli_version: "ps/freeze"
           settings: |-
             {
-              "sandbox": true
+              "sandbox": false
             }
           prompt: |
             Make a release notes based on all notable changes since the tag
