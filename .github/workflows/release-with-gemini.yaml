@@ -66,7 +66,7 @@ jobs:
   generate_release_notes:
 
     needs: get_info
-    if: needs.get_info.outputs.changed == 'true'
+    # if: needs.get_info.outputs.changed == 'true'
     timeout-minutes: 60
     runs-on: ubuntu-latest
     permissions:
