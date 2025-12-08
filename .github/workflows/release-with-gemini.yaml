@@ -90,7 +90,7 @@ jobs:
           git fetch --tags
 
       - name: Generate release notes
-        uses: google-github-actions/run-gemini-cli@v0
+        uses: parthasaradhie/run-gemini-cli@v0
         with:
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
           gemini_cli_version: "ps/freeze"
