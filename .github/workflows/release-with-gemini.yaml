@@ -93,7 +93,7 @@ jobs:
         uses: parthasaradhie/run-gemini-cli@v0
         with:
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
-          gemini_cli_version: "ps/freeze1"
+          gemini_cli_version: "main"
           gemini_debug: true
           settings: |-
             {
